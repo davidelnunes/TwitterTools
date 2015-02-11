@@ -22,7 +22,8 @@ class TTConsole extends CLI{
   }
 
   override def tweetNotify(numRetrieved: Long, total: Long): Unit = {
-    println("Tweets Retrieved: ["+numRetrieved+"/"+total+"]")
+    progressBar(numRetrieved/total.toDouble)
+    print("["+numRetrieved+"/"+total+"]")
   }
 
   /**

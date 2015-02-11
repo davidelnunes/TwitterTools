@@ -22,9 +22,10 @@ class TwitterTW(val iTime:Long, val rTime:Long, val rQueries:Int) {
   def withinWindow:Boolean = {(Platform.currentTime - iTime) / 1000 < rTime}
 
   def waitForWindow(listener: Option[CLI]): Unit = {
+
     val passed = FiniteDuration(Platform.currentTime - iTime,MILLISECONDS)
     if(withinWindow){
-      val timeToWait = FiniteDuration(rTime-(passed.toSeconds) + 1,SECONDS)
+      val timeToWait = FiniteDuration((rTime) - (passed.toSeconds) + 1,SECONDS)
 
       if(listener.isDefined) listener.get.waitNotify(timeToWait.toSeconds)
 
@@ -35,6 +36,7 @@ class TwitterTW(val iTime:Long, val rTime:Long, val rQueries:Int) {
         Thread sleep (1000)
       }
       listener.get.progressBar(1.0)
+      Thread sleep (1000)
     }
   }
 

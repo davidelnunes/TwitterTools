@@ -37,33 +37,54 @@ class SearchTools(config: ToolConfig,cli: Option[CLI]){
     var window = TwitterTW(twitter)
     var queriesDone = 0
 
-    for(nq <- (1 to totalQueries)){
-      //limit reached
-      if(queriesDone == window.rQueries){
-        if(cli.isDefined) cli.get.tweetNotify(tt,numTweets)
-        window.waitForWindow(cli)
-        //reset window
-        window = TwitterTW(twitter)
-        queriesDone = 0
-      }
+    for(nq <- (1 to totalQueries)) {
+      var done = false
+      while (!done) {
+        try{//twitter might get overloaded
+          //limit reached
+          while (queriesDone == window.rQueries && window.rQueries == 0) {
+            //wait 5 seconds window is resetting
+            if(window.rTime < 0){
+              Thread sleep (5000)
+            }else{
+              window.waitForWindow(cli)
+            }
+            //reset window
+            window = TwitterTW(twitter)
+            if (window.rQueries > 0)
+              queriesDone = 0
+          }
 
-      //perform query nq -> number of tweets to retrieve = nt-tt
-      val tweetsPerQuery = (numTweets-tt) min 100
-      query.setCount(tweetsPerQuery)
-      if(nq > 0) query.setMaxId(lastID)
+          //perform query nq -> number of tweets to retrieve = nt-tt
+          val tweetsPerQuery = (numTweets - tt) min 100
+          query.setCount(tweetsPerQuery)
+          if (nq > 0) query.setMaxId(lastID)
 
-      val results = twitter.search(query)
-      lastID = results.getMaxId
-      //convert to scala list
-      val tweets = results.getTweets().asScala.toList
-      writeTweets(tweets,keyword,tws)
-      tt += tweetsPerQuery
+          val results = twitter.search(query)
+          lastID = results.getMaxId
+          //convert to scala list
+          val tweets = results.getTweets().asScala.toList
+          writeTweets(tweets, keyword, tws)
+          tt += tweetsPerQuery
 
-      queriesDone += 1
+          queriesDone += 1
 
-      //update progress
-      if(cli.isDefined) {
-        cli.get.progressBar(tt/numTweets.toDouble)
+          //update progress
+          if (cli.isDefined) {
+            if (cli.isDefined) cli.get.tweetNotify(tt, numTweets)
+          }
+          done = true
+
+          //be nice to twitter done overrun them with requests
+          Thread sleep (1000)
+        }catch{
+          case oc:TwitterException =>
+            done = false
+            if(oc.getMessage.contains("capacity")) {
+              println("Twitter is over capacity, waiting for a bit")
+              Thread sleep (10000)
+            }
+        }
       }
     }
   }

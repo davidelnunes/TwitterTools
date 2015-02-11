@@ -1,12 +1,15 @@
 package search
 
+import auth.ToolConfig
+import cli.TTConsole
 import org.scalatest.{FlatSpec, Matchers}
+import tools.SearchTools
 
 /**
  * Created by @davidelnunes on 09-02-2015.
  */
 class TestSearchLimits extends FlatSpec with Matchers{
-/*
+/**
   "Seach Tools" should "be able to retrieve more than 45000 tweets" in {
     val console = new TTConsole
 

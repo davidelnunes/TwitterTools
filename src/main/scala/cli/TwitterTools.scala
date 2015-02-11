@@ -6,6 +6,7 @@ import auth.ToolConfig
 import io.CsvTweetWriter
 import org.rogach.scallop._
 import tools.SearchTools
+import twitter4j.TwitterException
 
 
 class Conf(arguments: Seq[String]) extends ScallopConf(arguments) {
@@ -71,7 +72,6 @@ class Conf(arguments: Seq[String]) extends ScallopConf(arguments) {
         Right(Unit)
       }
     }
-
   }
 }
 
@@ -84,11 +84,12 @@ object TwitterTools {
     val conf = new Conf(args)
 
 
+
     //loggger, progress bars etc
     val textLogger = new TTConsole
     val tw = new CsvTweetWriter(conf.get.out())
 
-
+    try{
     if(conf.file.f.isSupplied){
       println("Fetching tweets based on keywords from "+conf.file.f())
       val toolConfig: ToolConfig = ToolConfig(conf.file.cfg())
@@ -101,6 +102,9 @@ object TwitterTools {
       val toolConfig: ToolConfig = ToolConfig(conf.get.cfg())
       val search: SearchTools = SearchTools(toolConfig,Some(textLogger))
       search.tweetsFromKeyword(conf.get.k(),conf.get.n(),tw)
+    }
+    }catch{
+      case ex:TwitterException => println("Twitter is Overloaded")
     }
 
 
