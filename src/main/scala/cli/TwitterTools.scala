@@ -9,17 +9,7 @@ import tools.SearchTools
 
 
 class Conf(arguments: Seq[String]) extends ScallopConf(arguments) {
-  val cfg = opt[String](descr = "twitter-tools configuration file with api keys, search language, etc",
-    required = true)
 
-  validate(cfg) { filename =>
-    val inFile = new File(filename)
-    if (!inFile.exists()) {
-      Left("Please supply a configuration file")
-    } else {
-      Right(Unit)
-    }
-  }
 
   val get = new Subcommand("get-keyword") {
     val k = opt[String](name = "keyword",
@@ -36,7 +26,17 @@ class Conf(arguments: Seq[String]) extends ScallopConf(arguments) {
       default = Some("tweets.csv"),
       validate = (_.length > 0))
 
-    val c = cfg
+    val cfg = opt[String](name="cfg", descr = "twitter-tools configuration file with api keys, search language, etc",
+      required = true)
+
+    validate(cfg) { filename =>
+      val inFile = new File(filename)
+      if (!inFile.exists()) {
+        Left("Please supply a configuration file")
+      } else {
+        Right(Unit)
+      }
+    }
   }
   val file = new Subcommand("get-keywords") {
     val f = opt[String](name = "file",
@@ -60,7 +60,17 @@ class Conf(arguments: Seq[String]) extends ScallopConf(arguments) {
       default = Some("tweets.csv"),
       validate = (_.length > 0))
 
-    val c = cfg
+    val cfg = opt[String](name="cfg", descr = "twitter-tools configuration file with api keys, search language, etc",
+      required = true)
+
+    validate(cfg) { filename =>
+      val inFile = new File(filename)
+      if (!inFile.exists()) {
+        Left("Please supply a configuration file")
+      } else {
+        Right(Unit)
+      }
+    }
 
   }
 }
@@ -73,19 +83,23 @@ object TwitterTools {
   def main(args: Array[String]): Unit ={
     val conf = new Conf(args)
 
-    val toolConfig: ToolConfig = ToolConfig(conf.cfg())
+
     //loggger, progress bars etc
     val textLogger = new TTConsole
     val tw = new CsvTweetWriter(conf.get.out())
-    val search: SearchTools = SearchTools(toolConfig,Some(textLogger))
+
 
     if(conf.file.f.isSupplied){
       println("Fetching tweets based on keywords from "+conf.file.f())
+      val toolConfig: ToolConfig = ToolConfig(conf.file.cfg())
+      val search: SearchTools = SearchTools(toolConfig,Some(textLogger))
       search.tweetsFromKeywords(conf.file.f(),conf.file.n(),tw)
     }
 
     if(conf.get.k.isSupplied){
       println("Fetching tweets based on the keyword "+conf.get.k())
+      val toolConfig: ToolConfig = ToolConfig(conf.get.cfg())
+      val search: SearchTools = SearchTools(toolConfig,Some(textLogger))
       search.tweetsFromKeyword(conf.get.k(),conf.get.n(),tw)
     }
 
