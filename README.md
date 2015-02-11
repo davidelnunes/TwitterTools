@@ -18,7 +18,7 @@ The self-contained _Jar_ was compiled with Java 7.
 ##Download Tweets with a Keyword##
 
 ```bash
-java -jar TwitterTools.jar get-keyword -k hello -n 10000 -c twitter-tools.conf
+java -jar twitter-tools.jar get-keyword -k hello -n 10000 -c twitter-tools.conf
 ```
 
 This will produce a file named `hello_tweets.csv` in the current directory. You also need to supply a configuration file (in this example: _twitter-tools.conf_). This contains the API keys and secrets along with other configurations. An example configuration file you can modify is supplied in the _resources_ folder (see [here](https://github.com/davidelnunes/TwitterTools/blob/master/src/main/resources/twitter-tools.conf).
@@ -28,7 +28,7 @@ This will produce a file named `hello_tweets.csv` in the current directory. You 
 You can also download tweets by supplying a file with a set of terms (one per line) and evoking the following command. 
 
 ```bash
-java -jar TwitterTools.jar get-keywords -f input_keywords.txt -n 10000 -c twitter-tools.conf
+java -jar twitter-tools.jar get-keywords -f input_keywords.txt -n 10000 -c twitter-tools.conf
 ```
 
 If the input file contains _n_ lines, this will create _n_ files as output. Each file name is prefixed with the keyword used and contains _-n_ tweets. 
