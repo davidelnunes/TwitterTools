@@ -23,11 +23,13 @@ class TestKWFromFile extends FlatSpec with Matchers{
     val csvWriter = new CsvTweetWriter(basename)
 
 
-    search.tweetsFromKeywords(kwFile,10,csvWriter)
-    csvWriter.finish()
-
     val is = getClass().getClassLoader.getResourceAsStream(kwFile)
     val kwF = Source.fromInputStream(is)
+    kwF should not be (null)
+
+    search.tweetsFromKeywords(kwF,10,csvWriter)
+    csvWriter.finish()
+
 
     kwF.getLines foreach {
       keyword => {

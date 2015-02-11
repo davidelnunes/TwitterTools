@@ -93,20 +93,17 @@ class SearchTools(config: ToolConfig,cli: Option[CLI]){
    * Fetches a certain number of tweets for each keyword in a given file. It assumes that the file
    * does not have a header and contains one keyword per line.
    *
-   * @param kwFileName a file name where the keywords are stored
+   * @param kwFile a file [[Source]] where the keywords are stored
    * @param numTweets number of tweets to be retrieved per keyword
    * @param tws the tweet writers that will output the results
    */
-  def tweetsFromKeywords(kwFileName: String, numTweets: Int,tws: TweetWriter*): Unit ={
+  def tweetsFromKeywords(kwFile: Source, numTweets: Int,tws: TweetWriter*): Unit ={
     try{
-
-      val is = getClass().getClassLoader.getResourceAsStream(kwFileName)
-
-      val lines = Source.fromInputStream(is).getLines()
-      lines foreach {line => tweetsFromKeyword(line,numTweets,tws:_*)}
-
+      kwFile.getLines foreach {line => tweetsFromKeyword(line,numTweets,tws:_*)}
     }catch{
-      case ex: Exception => println("problems reading the file: "+kwFileName)
+      case ex: Exception =>
+        println("problems reading the keyword file")
+        ex.printStackTrace()
     }
   }
 

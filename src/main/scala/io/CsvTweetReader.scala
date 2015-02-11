@@ -16,7 +16,6 @@ class CsvTweetReader(filePath: String, withHeaders: Boolean) extends Iterator[(L
 
   override def next(): (Long, String) = {
     val nextTweet = tweets.next()
-
     val id = nextTweet(Headers.Id).toLong
     val text = nextTweet(Headers.Tweet)
 

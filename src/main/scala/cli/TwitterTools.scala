@@ -2,6 +2,7 @@ package cli
 
 import java.io.File
 
+import scala.io.Source
 import auth.ToolConfig
 import io.CsvTweetWriter
 import org.rogach.scallop._
@@ -83,22 +84,22 @@ object TwitterTools {
   def main(args: Array[String]): Unit ={
     val conf = new Conf(args)
 
-
-
     //loggger, progress bars etc
     val textLogger = new TTConsole
-    val tw = new CsvTweetWriter(conf.get.out())
+
 
     try{
     if(conf.file.f.isSupplied){
       println("Fetching tweets based on keywords from "+conf.file.f())
+      val tw = new CsvTweetWriter(conf.file.out())
       val toolConfig: ToolConfig = ToolConfig(conf.file.cfg())
       val search: SearchTools = SearchTools(toolConfig,Some(textLogger))
-      search.tweetsFromKeywords(conf.file.f(),conf.file.n(),tw)
+      search.tweetsFromKeywords(Source.fromFile(conf.file.f()),conf.file.n(),tw)
     }
 
     if(conf.get.k.isSupplied){
       println("Fetching tweets based on the keyword "+conf.get.k())
+      val tw = new CsvTweetWriter(conf.get.out())
       val toolConfig: ToolConfig = ToolConfig(conf.get.cfg())
       val search: SearchTools = SearchTools(toolConfig,Some(textLogger))
       search.tweetsFromKeyword(conf.get.k(),conf.get.n(),tw)
