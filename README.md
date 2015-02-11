@@ -1,8 +1,8 @@
 Twitter Tools 
 =============
-The original idea was to create a simple tool to download tweet data. This data is to be used to explore Natural Language Processing (NLP) tools and information retrieval techniques - such as Latent Semantic Analysis (LSA) and Random Indexing (RI). 
+The original idea was to create a simple tool to download tweet data. This data is to be used to explore Natural Language Processing (NLP) tools and information retrieval techniques. 
 
-I made this library so that I could add more functionality later on if needed. For now, its only capabilities are: to retrieve tweets based on keyword search and retrieve tweets based on a file with one search term per line. 
+For now, this library is only capable of: retrieve tweets based on keyword search and retrieve tweets based on a file with one search term per line. 
 
 The library is written in _scala_ and built using _sbt_. It wraps around [Twitter4J](http://twitter4j.org/en/) and provides a way to download tweets beyond the API limits: meaning that each time the search API resource limits are reached, we wait for the next time window.
 
