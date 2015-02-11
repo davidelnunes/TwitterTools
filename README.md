@@ -9,9 +9,11 @@ The library is written in _scala_ and built using _sbt_. It wraps around [Twitte
 Bare in mind that twitter _ToS_ prevents you from supplying any tweet dataset by the means of automatic download of a file. If you plan on distributing any dataset of tweets I would recommend distributing the data with reference to the Tweet IDs only - since tweet content belongs to twitter. 
 
 #Command Line Interface#
-The self-contained _Jar_ requires at lest Java 7 to run.
 
-I also packed everything in a self-contained _Jar_ file that can be used to run the tool from the command line as follows.
+I also packed everything in a self-contained [_Jar_ file](https://github.com/davidelnunes/TwitterTools/releases/download/v1.0/twitter-tools.jar) that can be used to run the tool from the command line.
+
+The self-contained _Jar_ was compiled with Java 7.
+
 
 ##Download Tweets with a Keyword##
 
