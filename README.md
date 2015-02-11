@@ -19,7 +19,7 @@ I also packed everything in a self-contained _Jar_ file that can be used to run 
 java -jar TwitterTools.jar get-keyword -k hello -n 10000 -c twitter-tools.conf
 ```
 
-This will produce a file named `hello_tweets.csv` in the current directory. You also need to supply a configuration file (in this example: _twitter-tools.conf_). This contains the API keys and secrets along with other configurations. An example configuration file you can modify is supplied in the _resources_ folder.
+This will produce a file named `hello_tweets.csv` in the current directory. You also need to supply a configuration file (in this example: _twitter-tools.conf_). This contains the API keys and secrets along with other configurations. An example configuration file you can modify is supplied in the _resources_ folder (see [here](https://github.com/davidelnunes/TwitterTools/blob/master/src/main/resources/twitter-tools.conf).
 
 ##Download Tweets with Keyword File##
 
