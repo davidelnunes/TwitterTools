@@ -6,7 +6,7 @@ For now, this library is only capable of: retrieve tweets based on keyword searc
 
 The library is written in _scala_ and built using _sbt_. It wraps around [Twitter4J](http://twitter4j.org/en/) and provides a way to download tweets beyond the API limits: meaning that each time the search API resource limits are reached, we wait for the next time window.
 
-Keep in mind that twitter _ToS_ prevents you from supplying any tweet dataset by the means of automatic download of a file. If you plan on distributing any dataset of tweets I would recommend distributing the data with reference to the Tweet IDs only - since tweet content belongs to twitter. 
+Keep in mind that twitter _ToS_ prevent you from supplying any tweet dataset by the means of automatic download of a file. If you plan on distributing any dataset of tweets I would recommend distributing the data with reference to the Tweet IDs only - since tweet content belongs to twitter. 
 
 #Command Line Interface#
 
