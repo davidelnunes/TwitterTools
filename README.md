@@ -33,9 +33,6 @@ java -jar twitter-tools.jar get-keywords -f input_keywords.txt -n 10000 -c twitt
 
 If the input file contains _n_ lines, this will create _n_ files as output. Each file name is prefixed with the keyword used and contains _-n_ tweets. 
 
-#Development Status & Pull Requests#
-I'm not actively supporting this. I'm just modifying it as needed to fix potential bugs or add functionality according to my needs. If you find this useful and want to contribute with documentation, functionality, or anything else, feel free to contact me and create a pull request. 
-
 #Licence#
 
 ###Twitter Tools###
