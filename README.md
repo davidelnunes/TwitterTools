@@ -37,8 +37,8 @@ If the input file contains _n_ lines, this will create _n_ files as output. Each
 
 ### Twitter Tools
 
-* Copyright(C) 2015 [Davide Nunes](http://davidenunes.com)
-* Authors: Davide Nunes - mail@davidelnunes.com
+* Copyright(C) 2015 Davide Nunes
+* Authors: Davide Nunes - [http://davidenunes.com](http://davidenunes.com) 
 
 This is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
